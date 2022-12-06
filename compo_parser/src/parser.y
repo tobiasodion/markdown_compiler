@@ -77,11 +77,39 @@ DOM* dom_root = NULL;
 %destructor { free_svg_inst($$); } <svg>
 %destructor { free_svg_list($$); } <svg_list>
 
-
 %token NEWLINE BLANK_LINE
 %token BOLD
+%token ITALIC
+%token UNDERLINE
+%token STRIKETHROUGH
 %token H1
+%token H2
+%token H3
+%token H4
+%token H5
+%token H6
+%token QUOTE
+%token EXCLAM
+%token LPAREN
+%token RPAREN
+%token LBRACKET
+%token RBRACKET
+%token HR
+%token INLINE_CODE
+%token BLOCK_CODE
+%token XSVG_BEGIN
+%token XSVG_END
+%token COMMA
+%token LINE
+%token POLYLINE
+%token POLYGON
+%token CIRCLE
+%token ELLIPSE
+%token RECT
+%token XSVG_TEXT
 %token <text> TEXT
+%token STR
+%token NUMBER
 
 %type <dom> document block
 %type <dom_list> block_list paragraph line text

@@ -219,7 +219,7 @@ number -?[0-9]+
     print_token("BLOCK-CODE");
 }
 
-{exclam} {
+^{exclam} {
     print_token("EXCLAM");
 }
 
