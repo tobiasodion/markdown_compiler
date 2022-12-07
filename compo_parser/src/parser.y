@@ -78,38 +78,22 @@ DOM* dom_root = NULL;
 %destructor { free_svg_list($$); } <svg_list>
 
 %token NEWLINE BLANK_LINE
-%token BOLD
-%token ITALIC
-%token UNDERLINE
-%token STRIKETHROUGH
-%token H1
-%token H2
-%token H3
-%token H4
-%token H5
-%token H6
+%token BOLD ITALIC
+%token UNDERLINE STRIKETHROUGH
+%token H1 H2 H3 H4 H5 H6
 %token QUOTE
 %token EXCLAM
-%token LPAREN
-%token RPAREN
-%token LBRACKET
-%token RBRACKET
+%token LPAREN RPAREN
+%token LBRACKET RBRACKET
 %token HR
-%token INLINE_CODE
-%token BLOCK_CODE
-%token XSVG_BEGIN
-%token XSVG_END
+%token INLINE_CODE BLOCK_CODE
+%token XSVG_BEGIN XSVG_END
 %token COMMA
-%token LINE
-%token POLYLINE
-%token POLYGON
-%token CIRCLE
-%token ELLIPSE
-%token RECT
+%token LINE POLYLINE POLYGON CIRCLE ELLIPSE RECT
 %token XSVG_TEXT
 %token <text> TEXT
 %token STR
-%token NUMBER
+%token <number> NUMBER
 
 %type <dom> document block
 %type <dom_list> block_list paragraph line text
@@ -126,7 +110,20 @@ text:
     | BOLD text BOLD {
         DOM* dom = new_dom(Bold, $2);
         $$ = new_dom_list(dom);
-    };
+    }
+    | ITALIC text ITALIC {
+        DOM* dom = new_dom(Italic, $2);
+        $$ = new_dom_list(dom);
+    }
+    | UNDERLINE text UNDERLINE {
+        DOM* dom = new_dom(Underline, $2);
+        $$ = new_dom_list(dom);
+    }
+    | STRIKETHROUGH text STRIKETHROUGH {
+        DOM* dom = new_dom(Strikethrough, $2);
+        $$ = new_dom_list(dom);
+    }
+    ;
 line:
     text line {
         $$ = $1;
@@ -146,11 +143,43 @@ block:
         $$ = new_dom(Header1, NULL);
         $$->text = $2;
     }
+    | H2 TEXT {
+        $$ = new_dom(Header2, NULL);
+        $$->text = $2;
+    }
+    | H3 TEXT {
+        $$ = new_dom(Header3, NULL);
+        $$->text = $2;
+    }
+    | H4 TEXT {
+        $$ = new_dom(Header4, NULL);
+        $$->text = $2;
+    }
+    | H5 TEXT {
+        $$ = new_dom(Header5, NULL);
+        $$->text = $2;
+    }
+    | H6 TEXT {
+        $$ = new_dom(Header6, NULL);
+        $$->text = $2;
+    }
     | paragraph {
         $$ = new_dom(Paragraph, $1);
+    }
+    | BLOCK_CODE BLANK_LINE paragraph BLANK_LINE BLOCK_CODE {
+        $$ = new_dom(BlockCode, $3);
     };
 block_list:
     block BLANK_LINE block_list {
+        if ($1 == NULL) {
+            $$ = $3;
+        } else {
+            $$ = new_dom_list($1);
+
+            $$->next = $3;
+        }
+    }
+    | block NEWLINE block_list {
         if ($1 == NULL) {
             $$ = $3;
         } else {
