@@ -97,6 +97,10 @@ DOM* dom_root = NULL;
 
 %type <dom> document block
 %type <dom_list> block_list paragraph line text
+%type <svg_coord_list> coord_list
+%type <svg_coord> coord
+%type <svg_list> svg_block_list
+%type <svg> svg_block
 %start document
 
 %%
@@ -123,7 +127,10 @@ text:
         DOM* dom = new_dom(Strikethrough, $2);
         $$ = new_dom_list(dom);
     }
-    ;
+    | INLINE_CODE text INLINE_CODE {
+        DOM* dom = new_dom(InlineCode, $2);
+        $$ = new_dom_list(dom);
+    };
 line:
     text line {
         $$ = $1;
@@ -168,7 +175,72 @@ block:
     }
     | BLOCK_CODE BLANK_LINE paragraph BLANK_LINE BLOCK_CODE {
         $$ = new_dom(BlockCode, $3);
+    }
+    | XSVG_BEGIN coord COMMA coord svg_block_list XSVG_END {
+        $$ = new_dom(SVG, NULL);
+        $$->svg_children = $5;
+    }
+    | EXCLAM LBRACKET TEXT RBRACKET LPAREN TEXT RPAREN{
+        $$ = new_dom(Image, NULL);
+        $$->text = $3;
+        $$->url = $6;
     };
+
+svg_block:
+    POLYLINE coord_list STR {
+        $$ = new_svg_inst(Polyline,$2);
+    }
+    |
+    POLYGON coord_list STR STR {
+        $$ = new_svg_inst(Polygon,$2);
+    }
+    |
+    CIRCLE coord NUMBER STR STR {
+        $$ = new_svg_inst(Circle,new_svg_coord_list($2));
+    }
+    |
+    ELLIPSE coord NUMBER NUMBER STR STR {
+         $$ = new_svg_inst(Ellipse,new_svg_coord_list($2));
+    }
+    |
+    RECT coord NUMBER NUMBER STR STR {
+         $$ = new_svg_inst(Rect,new_svg_coord_list($2));
+    }
+    |
+    XSVG_TEXT coord STR STR STR {
+         $$ = new_svg_inst(Text,new_svg_coord_list($2));
+    }
+    ;
+
+svg_block_list:
+    svg_block svg_block_list {
+        if ($1 == NULL) {
+            $$ = $2;
+        } else {
+            $$ = new_svg_list($1);
+            $$->next = $2;
+        }
+    }
+    |
+    svg_block {
+        $$ = new_svg_list($1);
+    };
+
+coord: 
+    NUMBER COMMA NUMBER {
+        $$ = new_svg_coord($1,$3);
+    };
+
+coord_list:
+    coord coord_list {
+        $$ = new_svg_coord_list($1);
+        $$->next = $2;
+    }
+    |
+    coord {
+        $$ = new_svg_coord_list($1);
+    };
+
 block_list:
     block BLANK_LINE block_list {
         if ($1 == NULL) {

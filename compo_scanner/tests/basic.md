@@ -41,9 +41,11 @@ text
 ---
 A third block of text
 
-![White rhinos](https://freeimages.com/or/7bab/africa_white_rhinos_rhino.jpg) Click on [ this link ]( https ://youtu .be dQw4w9WgXcQ )
+![White rhinos](https://freeimages.com/or/7babafrica_white_rhinos_rhino.jpg) Click on [ this link ]( https ://youtu .be dQw4w9WgXcQ )
 
-```xsvg: 0, 0, 20, 10 line 0,0 10 ,0 red```
+```xsvg: 0,0,20,10 
+line 0,0 10 ,0 red
+```
 
 
 ```
@@ -53,7 +55,9 @@ on multiple lines!
 
 ```
 
-```xsvg: 0, 0, 20, 10 polyline 0,0 5,5 10 ,10 15 ,15 red```
+```xsvg: 0, 0, 20, 10 
+polyline 0,0 5,5 10,10 15,15 red
+```
 
 I am **bold**!
 I am *italic*!

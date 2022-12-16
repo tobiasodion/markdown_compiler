@@ -289,22 +289,25 @@ number -?[0-9]+
 };
 
 <XSVG_MODE>{xsvg-text} {
+    char *copy = str_copy(yytext);
+    yylval.text = copy;
     return XSVG_TEXT;
 };
 
 <XSVG_MODE>{number} {
+    yylval.number = atoi(yytext);
     return NUMBER;
 };
 
-<XSVG_MODE>\n {
-    return NEWLINE;
-};
-
 <XSVG_MODE>"\"".+"\"" {
+    char *copy = str_copy(yytext);
+    yylval.text = copy;
     return STR;
 };
 
 <XSVG_MODE>[a-zA-Z\s]+ {
+    char *copy = str_copy(yytext);
+    yylval.text = copy;
     return STR;
 };
 
@@ -327,6 +330,7 @@ number -?[0-9]+
 
     char* txt = strbufclr(); // We retrieve the global string made with strbufapp()
     char *copy = str_copy(txt); // We have to make a copy of the global string or the yytext when needed
+    yylval.text = copy;
     return TEXT; // Will print the token TEXT along with the string
 };
 
