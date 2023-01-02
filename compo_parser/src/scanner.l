@@ -340,6 +340,7 @@ number -?[0-9]+
 
     char* txt = strbufclr();
     char *copy = str_copy(txt);
+    yylval.text = copy;
     return TEXT;
 };
 

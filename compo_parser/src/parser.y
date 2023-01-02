@@ -96,7 +96,7 @@ DOM* dom_root = NULL;
 %token <number> NUMBER
 
 %type <dom> document block
-%type <dom_list> block_list paragraph line text
+%type <dom_list> block_list paragraph line text 
 %type <svg_coord_list> coord_list
 %type <svg_coord> coord
 %type <svg_list> svg_block_list
@@ -184,9 +184,25 @@ block:
         $$ = new_dom(Image, NULL);
         $$->text = $3;
         $$->url = $6;
+    }
+    |LBRACKET TEXT RBRACKET LPAREN TEXT RPAREN{
+        $$ = new_dom(Link, NULL);
+        $$->text = $2;
+        $$->url = $5;
+    }
+    | HR{
+        $$ = new_dom(HRule, NULL);
+    }
+    | QUOTE TEXT{
+        $$ = new_dom(Quote, NULL);
+        $$->text = $2;
     };
 
 svg_block:
+    LINE coord_list STR{
+        $$ = new_svg_inst(Line,$2);
+    }
+    |
     POLYLINE coord_list STR {
         $$ = new_svg_inst(Polyline,$2);
     }

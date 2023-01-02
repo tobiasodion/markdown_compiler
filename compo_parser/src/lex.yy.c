@@ -1268,27 +1268,28 @@ case YY_STATE_EOF(TEXT_MODE):
 
     char* txt = strbufclr();
     char *copy = str_copy(txt);
+    yylval.text = copy;
     return TEXT;
 };
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 346 "src/scanner.l"
+#line 347 "src/scanner.l"
 {
     strbufapp(*yytext);
 };
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 350 "src/scanner.l"
+#line 351 "src/scanner.l"
 {}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 352 "src/scanner.l"
+#line 353 "src/scanner.l"
 ECHO;
 	YY_BREAK
-#line 1291 "src/lex.yy.c"
+#line 1292 "src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(BOLD_MODE):
 case YY_STATE_EOF(ITALIC_MODE):
@@ -2304,7 +2305,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 352 "src/scanner.l"
+#line 353 "src/scanner.l"
 
 
 /*********** C CODE (YOU DO NOT HAVE TO MODIFY IT) ******************/
