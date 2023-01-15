@@ -26,6 +26,203 @@ void add_indentation(string str, unsigned int indent_lvl) {
     }
 }
 
+string code_generation_from_svg(SvgInst *svg, unsigned int indent)
+{
+    if (svg == NULL){
+        return STR("");
+    }
+        
+    switch (svg->kind)
+    {
+        case Line:
+        {
+            SvgCoordList *svg_coords = svg->coords;
+            string html = STR("");
+            
+            add_indentation(html, indent);
+
+            char str[10];
+
+            APPEND_ARR(html, "<line ");
+
+            APPEND_ARR(html, "x1=\"");
+
+            sprintf(str, "%d", svg_coords->coord->x);
+            APPEND_ARR(html, str);
+
+            APPEND_ARR(html, "\" y1=\"");
+            char str2[10];
+            sprintf(str2, "%d", svg_coords->coord->y);
+            APPEND_ARR(html, str2);
+
+            svg_coords = svg_coords->next;
+            APPEND_ARR(html, "\" x2=\" ");
+
+            char str3[10];
+            sprintf(str3, "%d", svg_coords->coord->x);
+            APPEND_ARR(html, str3);
+
+            char str4[10];
+            sprintf(str4, "%d", svg_coords->coord->y);
+            APPEND_ARR(html, "\" y2=\" ");
+            APPEND_ARR(html, str4);
+
+            APPEND_ARR(html, "\" stroke=\"");
+            APPEND_ARR(html, svg->color_stroke);
+            APPEND_ARR(html, "\" />");
+
+            return html;
+        }
+        case Polyline:
+        {
+
+        SvgCoordList *svg_coords = svg->coords;
+        string html = STR("");
+        add_indentation(html, indent);
+
+        APPEND_ARR(html, "<polyline fill=\"none\" points=\"");
+        
+        while (svg_coords != NULL)
+        {
+            char res[25];
+            sprintf(res, "%d,%d ", svg_coords->coord->x, svg_coords->coord->y);
+            APPEND_ARR(html, res);
+            svg_coords = svg_coords->next;
+        }
+
+        APPEND_ARR(html, "\" stroke=\"");
+        APPEND_ARR(html, svg->color_stroke);
+
+        
+        APPEND_ARR(html, "\" />");
+
+        return html;
+        }
+        case Polygon:
+        {
+
+            SvgCoordList *svg_coords = svg->coords;
+            string html = STR("");
+            add_indentation(html, indent);
+
+            APPEND_ARR(html, "<polyline fill=\"");
+            APPEND_ARR(html, svg->color_fill);
+            APPEND_ARR(html, "\" stroke=\"");
+            APPEND_ARR(html, svg->color_stroke);
+            APPEND_ARR(html, "\" points=\"");
+
+            while (svg_coords != NULL)
+            {
+                char res[25];
+                sprintf(res, "%d,%d ", svg_coords->coord->x, svg_coords->coord->y);
+                APPEND_ARR(html, res);
+                svg_coords = svg_coords->next;
+            }
+            APPEND_ARR(html, "\" />");
+
+            return html;
+        }
+        case Circle:
+        {
+            SvgCoordList *svg_coords = svg->coords;
+            string html = STR("");
+            add_indentation(html, indent);
+
+            APPEND_ARR(html, "<circle ");
+
+            char coords[25];
+            sprintf(coords, "cx=\"%d\" cy=\"%d\" ", svg_coords->coord->x, svg_coords->coord->y);
+            APPEND_ARR(html, coords);
+
+            char r[25];
+            sprintf(r, "r=\"%d\" ", svg->width);
+            APPEND_ARR(html, r);
+
+            APPEND_ARR(html, "fill=\"");
+            APPEND_ARR(html, svg->color_fill);
+            APPEND_ARR(html, "\" stroke=\"");
+            APPEND_ARR(html, svg->color_stroke);
+            APPEND_ARR(html, "\" />");
+
+            return html;
+        }
+        case Ellipse:
+        {
+            SvgCoordList *svg_coords = svg->coords;
+            string html = STR("");
+            add_indentation(html, indent);
+
+            APPEND_ARR(html, "<ellipse ");
+
+            char coords[25];
+            sprintf(coords, "cx=\"%d\" cy=\"%d\" ", svg_coords->coord->x, svg_coords->coord->y);
+            APPEND_ARR(html, coords);
+
+            char r[25];
+            sprintf(r, "rx=\"%d\" ry=\"%d\" ", svg->width, svg->height);
+            APPEND_ARR(html, r);
+
+            APPEND_ARR(html, "fill=\"");
+            APPEND_ARR(html, svg->color_fill);
+            APPEND_ARR(html, "\" stroke=\"");
+            APPEND_ARR(html, svg->color_stroke);
+            APPEND_ARR(html, "\" />");
+
+            return html;
+        }
+        case Rect:
+        {
+            SvgCoordList *svg_coords = svg->coords;
+            string html = STR("");
+            add_indentation(html, indent);
+
+            APPEND_ARR(html, "<rect ");
+
+            char coords[25];
+            sprintf(coords, "x=\"%d\" y=\"%d\" ", svg_coords->coord->x, svg_coords->coord->y);
+            APPEND_ARR(html, coords);
+
+            char size[25];
+            sprintf(size, "width=\"%d\" height=\"%d\" ", svg->width, svg->height);
+            APPEND_ARR(html, size);
+
+            APPEND_ARR(html, "fill=\"");
+            APPEND_ARR(html, svg->color_fill);
+            APPEND_ARR(html, "\" stroke=\"");
+            APPEND_ARR(html, svg->color_stroke);
+            APPEND_ARR(html, "\" />");
+
+            return html;
+        }
+        case Text:
+        {
+            SvgCoordList *svg_coords = svg->coords;
+            string html = STR("");
+            add_indentation(html, indent);
+
+            APPEND_ARR(html, "<text ");
+
+            char coords[25];
+            sprintf(coords, "x=\"%d\" y=\"%d\" ", svg_coords->coord->x, svg_coords->coord->y);
+            APPEND_ARR(html, coords);
+
+            APPEND_ARR(html, "anchor=\"");
+            APPEND_ARR(html, svg->anchor);
+            APPEND_ARR(html, "\" fill=\"");
+            APPEND_ARR(html, svg->color_fill);
+            APPEND_ARR(html, "\" stroke=\"");
+            APPEND_ARR(html, svg->color_stroke);
+            APPEND_ARR(html, "\" >");
+            APPEND_ARR(html, svg->text);
+
+            APPEND_ARR(html, "</text>");
+
+            return html;
+        }
+    }
+}
+
+
 string code_generation_from_dom(DOM* dom, unsigned int indent) {
     /*
     YOU HAVE TO COMPLETE THIS FUNCTION TO PRODUCE THE HTML EQUIVALENT FOR EACH DOM ELEMENT
@@ -38,7 +235,6 @@ string code_generation_from_dom(DOM* dom, unsigned int indent) {
             add_indentation(html, indent);
 
             DomList *child = dom->children;
-
             while (child != NULL) {
                 string child_html = code_generation_from_dom(child->dom, indent + 1);
 
@@ -46,6 +242,27 @@ string code_generation_from_dom(DOM* dom, unsigned int indent) {
 
                 child = child->next;
             }
+
+            return html;
+        }
+        case SVG:
+        {
+            string html = STR("");
+
+            SvgList *child = dom->svg_children;
+            APPEND_ARR(html, "<svg  viewBox=\"0 0 200 100\">\n");
+            while (child != NULL)
+            {
+                string child_svg = code_generation_from_svg(child->svg, indent + 1);
+
+                APPEND_STR(html, child_svg);
+                APPEND_ARR(html, "\n");
+
+                child = child->next;
+            }
+
+            add_indentation(html, indent);
+            APPEND_ARR(html, "</svg>\n");
 
             return html;
         }
@@ -260,6 +477,34 @@ string code_generation_from_dom(DOM* dom, unsigned int indent) {
             add_indentation(html, indent);
 
             APPEND_ARR(html, "<hr/>\n");
+            return html;
+        }
+        case Link:
+        {
+            string html = STR(" ");
+
+            add_indentation(html, indent);
+            html = STR("<a href=\"");
+            APPEND_ARR(html, dom->url);
+            APPEND_ARR(html, "\" >");
+
+            APPEND_ARR(html, dom->text);
+
+            APPEND_ARR(html, "</a>\n");
+           
+            return html;
+        }
+        case Image:
+        {
+            string html = STR(" ");
+            add_indentation(html, indent);
+
+            html = STR("<img src=\"");
+            APPEND_ARR(html, dom->url);
+            APPEND_ARR(html, "\" alt=\"");
+            APPEND_ARR(html, dom->text);
+            APPEND_ARR(html, "\" />");
+            APPEND_ARR(html, "\n");
             return html;
         }
         default: {

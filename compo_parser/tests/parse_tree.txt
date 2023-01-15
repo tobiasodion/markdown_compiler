@@ -1,0 +1,96 @@
+Document
+├─── Header1 (Hello, world!)
+├─── Paragraph
+│   ├─── TextElement (I am )
+│   ├─── Bold
+│   │   ├─── TextElement (bold)
+│   ├─── TextElement (!)
+├─── Header1 (Hello, world!)
+├─── Header2 (Hello, world!)
+├─── Header3 (Hello, world!)
+├─── Header4 (Hello, world!)
+├─── Header5 (Hello, world!)
+├─── Header6 (Hello, world!)
+├─── Paragraph
+│   ├─── TextElement (I am )
+│   ├─── Bold
+│   │   ├─── TextElement (bold)
+│   ├─── TextElement (!)
+│   ├─── TextElement (I am )
+│   ├─── Italic
+│   │   ├─── TextElement (italic)
+│   ├─── TextElement (!)
+│   ├─── TextElement (I am )
+│   ├─── Underline
+│   │   ├─── TextElement (underline)
+│   ├─── TextElement (!)
+│   ├─── TextElement (I am )
+│   ├─── Strikethrough
+│   │   ├─── TextElement (strikethrough)
+│   ├─── TextElement (!)
+├─── Header1 (Hello , world !)
+├─── Header2 (Subtitle)
+├─── Paragraph
+│   ├─── Bold
+│   │   ├─── TextElement (Lorem ipsum)
+│   ├─── TextElement ( dolor sit amet)
+│   ├─── TextElement (, consectetur adipiscing eli. Duis)
+│   ├─── TextElement (aute irure dolor in reprehenderit)
+│   ├─── TextElement (in )
+│   ├─── Italic
+│   │   ├─── TextElement (voluptate)
+│   ├─── TextElement ( velit esse cillum)
+│   ├─── TextElement (dolore eu fugiat nulla pariatur.)
+├─── Quote (This a famous quote.)
+├─── Quote (This quote has two lines.)
+├─── Paragraph
+│   ├─── TextElement (There is some )
+│   ├─── InlineCode
+│   │   ├─── TextElement (inline code)
+│   ├─── TextElement (!)
+├─── BlockCode
+│   ├─── TextElement (This is a ! block of code )
+│   ├─── TextElement (on multiple lines!)
+├─── Paragraph
+│   ├─── TextElement (A block of text)
+├─── HRule
+├─── Paragraph
+│   ├─── TextElement (A second block of)
+│   ├─── TextElement (text)
+├─── HRule
+├─── Paragraph
+│   ├─── TextElement (A third block of text)
+├─── Image (White rhinos) (https://freeimages.com/or/7babafrica_white_rhinos_rhino.jpg)
+├─── Link ( this link ) ( https ://youtu .be dQw4w9WgXcQ )
+├─── SVG
+│   ├─── Line [ (0, 0) (10, 0)] w=-1 h=-1
+├─── BlockCode
+│   ├─── TextElement (This is a ! block of code)
+│   ├─── TextElement (on multiple lines!)
+├─── SVG
+│   ├─── Polyline [ (0, 0) (5, 5) (10, 10) (15, 15)] w=-1 h=-1
+├─── Paragraph
+│   ├─── TextElement (I am )
+│   ├─── Bold
+│   │   ├─── TextElement (bold)
+│   ├─── TextElement (!)
+│   ├─── TextElement (I am )
+│   ├─── Italic
+│   │   ├─── TextElement (italic)
+│   ├─── TextElement (!)
+│   ├─── TextElement (I am )
+│   ├─── Underline
+│   │   ├─── TextElement (underline)
+│   ├─── TextElement (!)
+│   ├─── TextElement (I am )
+│   ├─── Strikethrough
+│   │   ├─── TextElement (strikethrough)
+│   ├─── TextElement (!)
+├─── SVG
+│   ├─── Line [ (0, 0) (10, 0)] w=-1 h=-1
+│   ├─── Polyline [ (0, 0) (5, 5) (10, 10) (15, 15)] w=-1 h=-1
+│   ├─── Polygon [ (0, 0) (20, 0) (0, 20)] w=-1 h=-1
+│   ├─── Circle [ (50, 50)] w=-1 h=-1
+│   ├─── Ellipse [ (50, 50)] w=-1 h=-1
+│   ├─── Rect [ (0, 0)] w=-1 h=-1
+│   ├─── Text [ (0, 50)] w=-1 h=-1

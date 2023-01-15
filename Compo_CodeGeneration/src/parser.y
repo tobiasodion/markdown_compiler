@@ -94,7 +94,7 @@ DOM* dom_root = NULL;
 %token LINE POLYLINE POLYGON CIRCLE ELLIPSE RECT
 %token XSVG_TEXT
 %token <text> TEXT
-%token STR
+%token <text> STR
 %token <number> NUMBER
 
 %type <dom> document block
@@ -201,32 +201,51 @@ block:
     };
 
 svg_block:
-    LINE coord_list STR{
+    LINE coord_list STR {
         $$ = new_svg_inst(Line,$2);
+        $$->color_stroke = $3;
     }
     |
     POLYLINE coord_list STR {
         $$ = new_svg_inst(Polyline,$2);
+        $$->color_stroke = $3;
     }
     |
     POLYGON coord_list STR STR {
         $$ = new_svg_inst(Polygon,$2);
+        $$->color_fill = $3;
+        $$->color_stroke = $4;
     }
     |
     CIRCLE coord NUMBER STR STR {
         $$ = new_svg_inst(Circle,new_svg_coord_list($2));
+        $$->width = $3;
+        $$->color_fill = $4;
+        $$->color_stroke = $5;
     }
     |
     ELLIPSE coord NUMBER NUMBER STR STR {
          $$ = new_svg_inst(Ellipse,new_svg_coord_list($2));
+         $$->width = $3;
+         $$->height = $4;
+         $$->color_fill = $5;
+         $$->color_stroke = $6;
     }
     |
     RECT coord NUMBER NUMBER STR STR {
          $$ = new_svg_inst(Rect,new_svg_coord_list($2));
+         $$->width = $3;
+         $$->height = $4;
+         $$->color_fill = $5;
+         $$->color_stroke = $6;
     }
     |
-    XSVG_TEXT coord STR STR STR {
+    XSVG_TEXT coord STR STR STR STR {
          $$ = new_svg_inst(Text,new_svg_coord_list($2));
+         $$->text = $3;
+         $$->anchor = $4;
+         $$->color_fill =$5;
+         $$->color_stroke =$6;  
     }
     ;
 

@@ -44,3 +44,26 @@ text
 ---
 
 A third block of text
+
+![White rhinos](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/1024px-Gull_portrait_ca_usa.jpg) 
+
+[ this link ](https://youtu.be/dQw4w9WgXcQ)
+
+```xsvg:0,0,20,10
+line 0,0 10,0 red
+```
+```xsvg:0,0,20,10
+polyline 0,0 5,5 10,10 15,15 red
+```
+```xsvg:0,0,20,10
+polygon 0,0 20,0 0,20 blue red
+```
+```xsvg:0,0,20,10
+circle 10,10 10 red black
+```
+```xsvg:0,0,20,10
+text 0,20 "My text" middle red black
+```
+
+
+
